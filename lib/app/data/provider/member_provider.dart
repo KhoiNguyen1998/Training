@@ -9,11 +9,12 @@ class MemberProvider {
   MemberProvider._();
   static final MemberProvider _instance = MemberProvider._();
   factory MemberProvider() => _instance;
+  static String memberUrl = 'https://agrichapp.herokuapp.com';
   static int limit = 10;
 
   static Future<List<Member>?> fetchDataMember() async {
     try {
-      final res = await ApiHelper.request('/members');
+      final res = await ApiHelper.request('$memberUrl/members');
       return (res.data ?? []).map((json) => Member.fromJson(json)).toList();
     } catch (e) {
       rethrow;
@@ -22,8 +23,8 @@ class MemberProvider {
 
   static Future<List<Member>?> fetchMemberWithLimit(int page) async {
     try {
-      final res =
-          await ApiHelper.request('/members?page=${page}_limit=${limit}');
+      final res = await ApiHelper.request(
+          '$memberUrl/members?page=${page}_limit=$limit');
       return (res.data ?? []).map((json) => Member.fromJson(json)).toList();
     } catch (e) {
       rethrow;
